@@ -1,0 +1,13 @@
+# Atelje Pozivnica
+# Pocetna strana je otvorena za indeksiranje.
+# Pojedinacne pozivnice (/idpozivnice/) i panel domacina (/idpozivnice/token/)
+# NIKAD se ne indeksiraju jer sadrze licne podatke gostiju — to je zasticeno
+# serverski (meta robots "noindex") u worker.js, ne samo ovde.
+
+User-agent: *
+Allow: /$
+Disallow: /*/
+
+# VAZNO: kada povezete sopstveni domen (Deo 1, Korak 7 u UPUTSTVU),
+# zamenite adresu ispod svojim stvarnim domenom.
+Sitemap: https://mojeveselje.workers.dev/sitemap.xml
