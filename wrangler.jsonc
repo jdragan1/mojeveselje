@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mojeveselje",
+  "compatibility_date": "2026-07-14",
+  "main": "worker.js",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "INVITES",
+      "id": "PASTE_YOUR_KV_NAMESPACE_ID_HERE"
+    }
+  ]
+}
