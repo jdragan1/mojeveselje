@@ -605,3 +605,21 @@ Umesto zbijene tabele, panel domaćina sada prikazuje:
 - Dodato je **polje za pretragu** na vrhu spiska — kucaš deo imena, spisak se odmah filtrira uživo (testirao sam ovo — kucanje "Ivana" prikaže samo tu osobu, ostale nestanu iz prikaza dok ne obrišeš pretragu).
 
 CSV/Excel/JSON izvoz radi identično kao pre (nije menjano) — ova izmena je samo za pregled na samom sajtu.
+
+---
+
+## DEO 15 — Layout u panelu domaćina popravljen + pravo trajno čuvanje linkova (istraženo na GitHub-u)
+
+### 1. Preklapanje "Nazad" dugmeta i "Panel domaćina" bedža
+Na uskim ekranima, dugme "← Napravi svoju pozivnicu" (levo) i bedž "Panel domaćina" (desno) su bila dovoljno dugačka da se doslovno sudare na sredini ekrana. Sad: na uskim telefonima (ispod 480px širine), dugme za nazad se skraćuje na samo strelicu "←" (bez teksta), a "Panel domaćina" bedž dobija manji font — više nema šanse za preklapanje, testirao sam da tekst postoji ali se ispravno sakriva/skraćuje.
+
+### 2. Trajno čuvanje linkova — sada pravi, proveren obrazac sa GitHub-a
+Pogledao sam kako ovo rade poznate, široko korišćene biblioteke za tačno ovaj problem (localForage, Storer.js, local-storage-fallback). Sve koriste isti princip: **probaj localStorage, pa ako ne uspe probaj kolačić (cookie), pa ako ni to ne uspe, drži bar u memoriji dok je stranica otvorena.** Ranije je sajt samo probao localStorage i, ako ne uspe, jednostavno odustajao — što je verovatno bio pravi uzrok stalnog gubljenja linkova, pošto se ovi linkovi baš najčešće otvaraju iz in-app pregledača (WhatsApp, Viber, Instagram, Facebook poruke) koji su poznati po tome što ograničavaju ili blokiraju localStorage.
+
+Implementirao sam isti obrazac. **Testirao sam ovo na najstroži mogući način** — simulirao sam okruženje gde `localStorage` ne samo da ne radi nego **baca grešku na svaki pokušaj** (najgori realan scenario), i potvrdio dvema odvojenim proverama:
+1. Da se podatak ipak sačuva (preko kolačića).
+2. Da **preživi potpuno novo učitavanje stranice** (simulirao sam da korisnik zatvori i ponovo otvori sajt, sa istim "browserom" ali svežom stranicom) — podatak je i dalje bio tu.
+
+**Napomena o ograničenju kolačića:** kolačići mogu da drže manje podataka od localStorage-a (oko 4KB), zato je granica broja sačuvanih pozivnica u ovoj lokalnoj listi smanjena sa 200 na 25 — više je nego dovoljno za realnu upotrebu (jedan domaćin retko pravi više od par pozivnica), a garantuje da spisak sigurno stane i u kolačić kao rezervu, ne samo u localStorage kada on radi.
+
+**I dalje važi:** ovo je lokalno po uređaju/pregledaču. Nalog (email+lozinka ili Google prijava) ostaje jedini način da linkovi budu dostupni sa bilo kog uređaja i da nikad ne zavise od podešavanja konkretnog browsera.
