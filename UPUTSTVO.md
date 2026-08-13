@@ -173,10 +173,12 @@ Isto kao pre: Workers projekat → **Settings → Domains & Routes → Add** →
 ### Naslovna slika kad se link deli (WhatsApp, Viber, Facebook)
 Kad gost/mladenci podele link pozivnice, aplikacija sad automatski ubacuje naslov, kratak opis i **naslovnu fotografiju** u pregled linka — radi to server (`worker.js`), ne sam browser, tako da radi pouzdano na svim aplikacijama. Da bi slika bila vidljiva, mladenci moraju da otkače naslovnu fotografiju u formi (sekcija "Osnovni podaci"). Ako je ne dodaju, link i dalje radi normalno, samo bez slike u pregledu.
 
-### Sopstvene teme (`public/themes.js`)
-Uključena je gotova primer-tema **"Crtani filmovi"** za dečije rođendane — šareno, sa fontom u stilu crtanih filmova, tačkastom pozadinom, zaobljenim karticama. Nalazi se pod kategorijom "Ostalo" u galeriji šablona, obeležena zvezdicom (✦).
+### Sopstvene teme — VAŽNO: gde se stvarno menjaju
+⚠️ **`public/themes.js` se trenutno NE učitava na sajtu** (ostao je neiskorišćen posle jedne starije popravke bloka koji je izazivao praznu stranicu — objašnjeno niže u ovom dokumentu, deo o "Uncaught SyntaxError"). Kod tema koji sajt STVARNO koristi nalazi se ugrađen direktno unutar `public/index.html`, u `<script>` bloku — potraži `const CUSTOM_THEMES` u tom fajlu. Svaka izmena teme mora se raditi TAMO da bi imala efekta na sajt. `public/themes.js` je ostavljen kao čitljiva referenca istog sadržaja, radi lakšeg pregleda, ali menjanje samo njega neće promeniti ništa na sajtu.
 
-Da dodaš još tema: otvori `public/themes.js` na GitHub-u, prati uputstvo napisano na vrhu fajla (kopiraš postojeći blok, menjaš boje/font/naziv). Nema potrebe da diraš glavni `index.html` — sve nove teme se automatski pojave u galeriji.
+Trenutno postoji tema **"Rođendanska proslava"** (šareno, konfete, baloni-stilizovano, moderan zaobljen font) pod kategorijom "Ostalo" u galeriji šablona, namenjena rođendanima.
+
+Da dodaš još tema: prati uputstvo napisano na vrhu `public/themes.js` (isti format važi za blok u `index.html`) — kopiraš postojeći blok, menjaš boje/font/naziv, i lepiš i u `themes.js` (referenca) i u `index.html` (stvarno mesto).
 
 ### Forma sad radi na "harmoniku" (akordeon)
 Duga forma za popunjavanje podataka je sad podeljena na sekcije koje se otvaraju/zatvaraju klikom na naslov sekcije (npr. "Osobe", "Naša priča") — mnogo preglednije na telefonu, korisnik vidi samo ono na čemu trenutno radi.
